@@ -1,99 +1,132 @@
-export const Logo = ({ size = 120 }) => {
-  const centerX = 67.5;
+export const Logo = ({ size = 180, weight = 16 }) => {
+  const squareSize = 12;
+  const squareGap = 6;
 
-  const squareSize = 6;
-  const gap = 4;
+  const centerX = 100;
 
-  const gridWidth = 2 * squareSize + gap; // 16
-  const startX = centerX - gridWidth / 2;
-
-  const startY = 72; // رجعناهم لفوق جوه الدرع
+  const leftSquareX = centerX - squareSize - squareGap / 2;
+  const rightSquareX = centerX + squareGap / 2;
 
   return (
     <svg
       width={size}
       height={size}
-      viewBox="35 25 65 85"
+      viewBox="35 30 130 135"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Shield */}
-      <path
-        d="
-          M35 30
-          L35 75
-          L67.5 105
-          L100 75
-          L100 30
-        "
-        fill="none"
-        stroke="#000"
-        strokeWidth="9"
-        strokeLinejoin="round"
+      {/* Roof left */}
+      <line
+        x1="40"
+        y1="90"
+        x2="100"
+        y2="35"
+        stroke="#111"
+        strokeWidth={weight}
         strokeLinecap="round"
       />
 
-      {/* H */}
-      <line x1="35" y1="25" x2="35" y2="65" stroke="#000" strokeWidth="9" />
-      <line x1="55" y1="25" x2="55" y2="65" stroke="#000" strokeWidth="9" />
-      <line x1="35" y1="45" x2="55" y2="45" stroke="#000" strokeWidth="9" />
-
-      {/* Mirrored K */}
-      <g transform="translate(87.5,0) scale(-1,1) translate(-87.5,0)">
-        <line
-          x1="75"
-          y1="25"
-          x2="75"
-          y2="65"
-          stroke="#c1121f"
-          strokeWidth="9"
-        />
-        <line
-          x1="75"
-          y1="45"
-          x2="100"
-          y2="25"
-          stroke="#c1121f"
-          strokeWidth="9"
-        />
-        <line
-          x1="75"
-          y1="45"
-          x2="100"
-          y2="65"
-          stroke="#c1121f"
-          strokeWidth="9"
-        />
-      </g>
-
-      {/* 2x2 Grid centered */}
-      <rect
-        x={startX}
-        y={startY}
-        width={squareSize}
-        height={squareSize}
-        fill="#000"
-      />
-      <rect
-        x={startX + squareSize + gap}
-        y={startY}
-        width={squareSize}
-        height={squareSize}
-        fill="#000"
+      {/* Roof right */}
+      <line
+        x1="100"
+        y1="35"
+        x2="160"
+        y2="90"
+        stroke="#111"
+        strokeWidth={weight}
+        strokeLinecap="round"
       />
 
+      {/* Left vertical (shared with K) */}
+      <line
+        x1="40"
+        y1="90"
+        x2="40"
+        y2="160"
+        stroke="#c1121f"
+        strokeWidth={weight}
+        strokeLinecap="round"
+      />
+
+      {/* Right vertical (shared with H) */}
+      <line
+        x1="160"
+        y1="90"
+        x2="160"
+        y2="160"
+        stroke="#111"
+        strokeWidth={weight}
+        strokeLinecap="round"
+      />
+
+      {/* ===== 4 Center Squares ===== */}
       <rect
-        x={startX}
-        y={startY + squareSize + gap}
+        x={leftSquareX}
+        y="70"
         width={squareSize}
         height={squareSize}
-        fill="#000"
+        fill="#111"
       />
       <rect
-        x={startX + squareSize + gap}
-        y={startY + squareSize + gap}
+        x={rightSquareX}
+        y="70"
         width={squareSize}
         height={squareSize}
-        fill="#000"
+        fill="#111"
+      />
+      <rect
+        x={leftSquareX}
+        y={70 + squareSize + squareGap}
+        width={squareSize}
+        height={squareSize}
+        fill="#111"
+      />
+      <rect
+        x={rightSquareX}
+        y={70 + squareSize + squareGap}
+        width={squareSize}
+        height={squareSize}
+        fill="#111"
+      />
+
+      {/* ===== Letter K (red) ===== */}
+      <line
+        x1="40"
+        y1="125"
+        x2="90"
+        y2="105"
+        stroke="#c1121f"
+        strokeWidth={weight}
+        strokeLinecap="round"
+      />
+      <line
+        x1="40"
+        y1="125"
+        x2="90"
+        y2="160"
+        stroke="#c1121f"
+        strokeWidth={weight}
+        strokeLinecap="round"
+      />
+
+      {/* ===== Letter H (black) ===== */}
+      <line
+        x1="120"
+        y1="110"
+        x2="120"
+        y2="160"
+        stroke="#111"
+        strokeWidth={weight}
+        strokeLinecap="round"
+      />
+
+      <line
+        x1="120"
+        y1="135"
+        x2="160"
+        y2="135"
+        stroke="#111"
+        strokeWidth={weight}
+        strokeLinecap="round"
       />
     </svg>
   );

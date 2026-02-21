@@ -40,7 +40,7 @@ export function HomePage() {
         className="hero-section d-flex align-items-center text-light"
       >
         <Container className="text-center">
-          <h1 className="display-4 fw-bold mb-3">Welcome to HK Company</h1>
+          <h1 className="display-4 fw-bold mb-3">Welcome to KH Company</h1>
           <p className="lead mb-4">
             Premium industrial solutions built with precision and reliability.
           </p>
@@ -60,7 +60,7 @@ export function HomePage() {
             <Col md={6}>
               <h2 className="fw-bold mb-3">About Us</h2>
               <p>
-                HK Company delivers high-quality engineering and industrial
+                KH Company delivers high-quality engineering and industrial
                 products designed for performance and durability.
               </p>
             </Col>
