@@ -1,89 +1,122 @@
 import { useSelector, useDispatch } from "react-redux";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import {
-  increaseQuantity,
-  decreaseQuantity,
+  increaseQty,
+  decreaseQty,
   removeFromCart,
 } from "../features/cart/cartSlice";
 
-import { Table, Button } from "react-bootstrap";
-
-export const CartPage = () => {
+export function CartPage() {
   const dispatch = useDispatch();
 
   const cartItems = useSelector((state) => state.cart.items);
 
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
+  const total = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
     0,
   );
 
+  if (cartItems.length === 0) {
+    return (
+      <Container className="mt-5 text-center">
+        <h3>Your cart is empty</h3>
+      </Container>
+    );
+  }
+
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">Your Cart</h2>
+    <Container className="mt-4">
+      <Row>
+        {/* Products */}
+        <Col lg={8} md={12}>
+          {cartItems.map((item) => (
+            <Card key={item.id} className="mb-3">
+              <Card.Body>
+                <Row className="align-items-center">
+                  {/* Image */}
+                  <Col xs={4} md={3}>
+                    <img
+                      src={item.images[0]}
+                      className="img-fluid"
+                      alt={item.name}
+                    />
+                  </Col>
 
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty</p>
-      ) : (
-        <>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th></th>
-              </tr>
-            </thead>
+                  {/* Name */}
+                  <Col xs={8} md={3}>
+                    <h5>{item.name}</h5>
+                  </Col>
 
-            <tbody>
-              {cartItems.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.name}</td>
+                  {/* Price */}
+                  <Col xs={6} md={2}>
+                    ${item.price}
+                  </Col>
 
-                  <td>${item.price}</td>
+                  {/* Quantity */}
+                  <Col xs={6} md={2}>
+                    <div className="d-flex align-items-center gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline-secondary"
+                        onClick={() => dispatch(decreaseQty(item.id))}
+                      >
+                        -
+                      </Button>
 
-                  <td>
+                      {item.quantity}
+
+                      <Button
+                        size="sm"
+                        variant="outline-secondary"
+                        onClick={() => dispatch(increaseQty(item.id))}
+                      >
+                        +
+                      </Button>
+                    </div>
+                  </Col>
+
+                  {/* Subtotal */}
+                  <Col xs={6} md={1}>
+                    ${item.price * item.quantity}
+                  </Col>
+
+                  {/* Remove */}
+                  <Col xs={6} md={1}>
                     <Button
-                      size="sm"
-                      variant="secondary"
-                      onClick={() => dispatch(decreaseQuantity(item.id))}
-                    >
-                      -
-                    </Button>
-
-                    <span className="mx-2">{item.quantity}</span>
-
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      onClick={() => dispatch(increaseQuantity(item.id))}
-                    >
-                      +
-                    </Button>
-                  </td>
-
-                  <td>${item.price * item.quantity}</td>
-
-                  <td>
-                    <Button
-                      size="sm"
                       variant="danger"
+                      size="sm"
                       onClick={() => dispatch(removeFromCart(item.id))}
                     >
-                      Remove
+                      ✕
                     </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          ))}
+        </Col>
 
-          <h4>Total: ${totalPrice}</h4>
+        {/* Order Summary */}
+        <Col lg={4} md={12}>
+          <Card>
+            <Card.Body>
+              <h4>Order Summary</h4>
 
-          <Button variant="success">Checkout</Button>
-        </>
-      )}
-    </div>
+              <hr />
+
+              <div className="d-flex justify-content-between">
+                <span>Total</span>
+
+                <strong>${total}</strong>
+              </div>
+
+              <Button variant="danger" className="w-100 mt-3">
+                Checkout
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
-};
+}

@@ -1,11 +1,12 @@
-import { Card, Button, Col } from "react-bootstrap";
+import { Card, Button, Col, Toast, ToastContainer } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-
 import { setSelectedProduct } from "../productsSlice";
 import { addToCart } from "../../cart/cartSlice";
+import { useState } from "react";
 
 export function ProductCard({ product }) {
   const dispatch = useDispatch();
+  const [showToast, setShowToast] = useState(false);
 
   return (
     <Col md={4} className="mb-4">
@@ -39,13 +40,27 @@ export function ProductCard({ product }) {
 
             <Button
               variant="outline-dark"
-              onClick={() => dispatch(addToCart(product))}
+              onClick={() => {
+                dispatch(addToCart(product));
+                setShowToast(true);
+              }}
             >
               Add to Cart
             </Button>
           </div>
         </Card.Body>
       </Card>
+      <ToastContainer position="bottom-end" className="p-3">
+        <Toast
+          onClose={() => setShowToast(false)}
+          show={showToast}
+          delay={2000}
+          autohide
+          bg="success"
+        >
+          <Toast.Body className="text-white">Product added to cart</Toast.Body>
+        </Toast>
+      </ToastContainer>
     </Col>
   );
 }
