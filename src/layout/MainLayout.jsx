@@ -4,12 +4,14 @@ import { Footer } from "./Footer";
 
 export const MainLayout = () => {
   return (
-    <>
+    <div className="layout-wrapper">
       <CustomNavbar />
-      <div>
+
+      <main className="main-content">
         <Outlet />
-      </div>
+      </main>
+
       <Footer />
-    </>
+    </div>
   );
 };

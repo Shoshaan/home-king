@@ -3,6 +3,7 @@ import { MainLayout } from "../layout/MainLayout";
 import { HomePage } from "../pages/HomePage";
 import { ProductsPage } from "../features/products/pages/ProductsPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
+import { CartPage } from "../pages/CartPage";
 
 export function AppRouter() {
   return (
@@ -11,6 +12,7 @@ export function AppRouter() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

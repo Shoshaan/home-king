@@ -1,41 +1,45 @@
-import { Navbar, Nav, Container } from "react-bootstrap";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Navbar, Nav, Container, Badge } from "react-bootstrap";
+import { NavLink, useLocation, useNavigate, Link } from "react-router-dom";
 import { Logo } from "../features/products/components/Logo";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { FaShoppingCart } from "react-icons/fa";
 
 export const CustomNavbar = () => {
   const [activeSection, setActiveSection] = useState("hero-section");
   const location = useLocation();
   const navigate = useNavigate();
+  const cartItems = useSelector((state) => state.cart.items);
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-useEffect(() => {
-  if (location.pathname !== "/") {
-    setActiveSection("");
-    return;
-  }
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      setActiveSection("");
+      return;
+    }
 
-  const sections = ["hero-section", "about-section", "contact-section"];
+    const sections = ["hero-section", "about-section", "contact-section"];
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    },
-    {
-      threshold: 0.5,
-    },
-  );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        threshold: 0.5,
+      },
+    );
 
-  sections.forEach((id) => {
-    const element = document.getElementById(id);
-    if (element) observer.observe(element);
-  });
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
 
-  return () => observer.disconnect();
-}, [location.pathname]);
+    return () => observer.disconnect();
+  }, [location.pathname]);
 
   const scrollToSection = (sectionId) => {
     if (location.pathname !== "/") {
@@ -63,8 +67,13 @@ useEffect(() => {
         <Navbar.Collapse>
           <Nav className="ms-auto">
             <Nav.Link
-              onClick={() => scrollToSection("hero-section")}
-              className={activeSection === "hero-section" ? "active" : ""}
+              onClick={() => {
+                if (window.location.pathname !== "/") {
+                  navigate("/");
+                } else {
+                  scrollToSection("hero-section");
+                }
+              }}
             >
               Home
             </Nav.Link>
@@ -85,6 +94,25 @@ useEffect(() => {
               className={activeSection === "contact-section" ? "active" : ""}
             >
               Contact Us
+            </Nav.Link>
+            <Nav.Link as={Link} to="/cart" className="cart-link">
+              <span className="cart-icon-wrapper">
+                <FaShoppingCart size={22} />
+                {cartCount > 0 && (
+                  <Badge
+                    bg="danger"
+                    pill
+                    style={{
+                      position: "absolute",
+                      top: "-8px",
+                      right: "-10px",
+                      fontSize: "10px",
+                    }}
+                  >
+                    {cartCount}
+                  </Badge>
+                )}
+              </span>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
