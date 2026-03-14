@@ -76,8 +76,12 @@ export function CartPage() {
                   </Col>
 
                   {/* Subtotal */}
-                  <Col xs={6} md={1}>
-                    ${item.price * item.quantity}
+                  <Col xs={12} md={2} className="text-md-end mt-2 mt-md-0">
+                    <div className="cart-total-label">Total</div>
+
+                    <div className="cart-total-price">
+                      ${item.price * item.quantity}
+                    </div>
                   </Col>
 
                   {/* Remove */}

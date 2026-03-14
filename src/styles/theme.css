@@ -224,3 +224,12 @@ html {
 .thumb.active {
   border-color: #dc3545;
 }
+.cart-total-label{
+  font-size:12px;
+  color:#888;
+}
+
+.cart-total-price{
+  font-weight:600;
+  font-size:16px;
+}
