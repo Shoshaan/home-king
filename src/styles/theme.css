@@ -247,3 +247,18 @@ html {
     transform: scale(1);
   }
 }
+.sidebar-link {
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  transition: 0.2s;
+  text-decoration: none !important;
+}
+
+.sidebar-link:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.sidebar-link.active {
+  background: #dc3545;
+}

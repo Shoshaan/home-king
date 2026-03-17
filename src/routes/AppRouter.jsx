@@ -8,6 +8,10 @@ import { CheckoutPage } from "../pages/CheckoutPage";
 import { PaymentSuccess } from "../pages/PaymentSuccess";
 import { PaymentFailed } from "../pages/PaymentFaild";
 import { ScrollToTop } from "../features/products/components/ScrollToTop";
+import { DashboardPage } from "../features/dashboard/Pages/DashboardPage";
+import { OrdersPage } from "../features/dashboard/Pages/OrdersPage";
+
+
 
 export function AppRouter() {
   return (
@@ -21,6 +25,8 @@ export function AppRouter() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/success" element={<PaymentSuccess />} />
           <Route path="/failed" element={<PaymentFailed />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/dashboard/orders" element={<OrdersPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
