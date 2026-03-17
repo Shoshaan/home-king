@@ -14,6 +14,10 @@ export const CustomNavbar = () => {
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const [expanded, setExpanded] = useState(false);
   const { user, logout } = useAuth();
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   useEffect(() => {
     if (location.pathname !== "/") {
@@ -142,11 +146,19 @@ export const CustomNavbar = () => {
               </span>
             </Nav.Link>
 
-            {user && (
-              <button className="logout-btn" onClick={logout}>
-                Logout
-              </button>
-            )}
+            {/* RIGHT SIDE */}
+            {/* RIGHT SIDE */}
+            <div className="d-flex align-items-center gap-2">
+              {!user ? (
+                <Link to="/login" className="login-btn">
+                  Login
+                </Link>
+              ) : (
+                <button className="logout-btn" onClick={handleLogout}>
+                  Logout
+                </button>
+              )}
+            </div>
           </Nav>
         </Navbar.Collapse>
       </Container>

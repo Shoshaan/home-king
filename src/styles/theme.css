@@ -278,3 +278,30 @@ html {
   background: #dc3545;
   color: white;
 }
+
+.login-btn {
+  background: #dc3545;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.login-btn:hover {
+  background: #bb2d3b;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.logout-btn:hover {
+  background: #dc3545;
+  color: white;
+}
