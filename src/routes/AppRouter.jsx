@@ -5,6 +5,8 @@ import { ProductsPage } from "../features/products/pages/ProductsPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { CartPage } from "../pages/CartPage";
 import { CheckoutPage } from "../pages/CheckoutPage";
+import { PaymentSuccess } from "../pages/PaymentSuccess";
+import { PaymentFailed } from "../pages/PaymentFaild";
 
 export function AppRouter() {
   return (
@@ -15,6 +17,8 @@ export function AppRouter() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/success" element={<PaymentSuccess />} />
+          <Route path="/failed" element={<PaymentFailed />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
