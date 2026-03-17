@@ -5,6 +5,7 @@ import {
   decreaseQty,
   removeFromCart,
 } from "../features/cart/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 export function CartPage() {
   const dispatch = useDispatch();
@@ -23,6 +24,15 @@ export function CartPage() {
       </Container>
     );
   }
+  const navigate = useNavigate();
+  const handleCheckout = () => {
+    if (cartItems.length === 0) {
+      alert("Your cart is empty");
+      return;
+    }
+
+    navigate("/checkout");
+  };
 
   return (
     <Container className="mt-4">
@@ -114,7 +124,11 @@ export function CartPage() {
                 <strong>${total}</strong>
               </div>
 
-              <Button variant="danger" className="w-100 mt-3">
+              <Button
+                variant="danger"
+                className="w-100 mt-3"
+                onClick={handleCheckout}
+              >
                 Checkout
               </Button>
             </Card.Body>

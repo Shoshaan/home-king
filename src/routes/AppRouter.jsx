@@ -4,6 +4,7 @@ import { HomePage } from "../pages/HomePage";
 import { ProductsPage } from "../features/products/pages/ProductsPage";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { CartPage } from "../pages/CartPage";
+import { CheckoutPage } from "../pages/CheckoutPage";
 
 export function AppRouter() {
   return (
@@ -13,6 +14,7 @@ export function AppRouter() {
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
