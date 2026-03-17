@@ -7,10 +7,12 @@ import { CartPage } from "../pages/CartPage";
 import { CheckoutPage } from "../pages/CheckoutPage";
 import { PaymentSuccess } from "../pages/PaymentSuccess";
 import { PaymentFailed } from "../pages/PaymentFaild";
+import { ScrollToTop } from "../features/products/components/ScrollToTop";
 
 export function AppRouter() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />

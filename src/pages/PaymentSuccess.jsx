@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Container, Button } from "react-bootstrap";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { clearCart } from "../redux/cartSlice";
+import { clearCart } from "../features/cart/cartSlice";
 
 export function PaymentSuccess() {
   const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -9,9 +9,19 @@ import {
   Card,
   Spinner,
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export function CheckoutPage() {
+  const navigate = useNavigate();
+
   const cartItems = useSelector((state) => state.cart.items);
+
+  // 🔥 حماية الصفحة
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      navigate("/cart");
+    }
+  }, []);
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -31,47 +41,35 @@ export function CheckoutPage() {
 
   const [errors, setErrors] = useState({});
 
-  // ====================
-  // Handle Input Change
-  // ====================
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
 
-    // remove error on typing
     setErrors({
       ...errors,
       [e.target.name]: "",
     });
   };
 
-  // ====================
-  // Validation
-  // ====================
   const validate = () => {
     let newErrors = {};
 
-    if (!formData.firstName) newErrors.firstName = "First name is required";
-    if (!formData.lastName) newErrors.lastName = "Last name is required";
+    if (!formData.firstName) newErrors.firstName = "Required";
+    if (!formData.lastName) newErrors.lastName = "Required";
 
-    if (!formData.email || !formData.email.includes("@"))
-      newErrors.email = "Enter a valid email";
+    if (!formData.email.includes("@")) newErrors.email = "Invalid email";
 
-    if (!formData.phone || formData.phone.length < 10)
-      newErrors.phone = "Enter a valid phone number";
+    if (formData.phone.length < 10) newErrors.phone = "Invalid phone";
 
-    if (!formData.address) newErrors.address = "Address is required";
+    if (!formData.address) newErrors.address = "Required";
 
     setErrors(newErrors);
 
     return Object.keys(newErrors).length === 0;
   };
 
-  // ====================
-  // Submit
-  // ====================
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -96,10 +94,9 @@ export function CheckoutPage() {
 
       const data = await res.json();
 
-      // redirect to payment
       window.location.href = data.paymentUrl;
     } catch {
-      setError("Something went wrong. Please try again.");
+      setError("Network error, please try again.");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } finally {
       setLoading(false);
@@ -109,85 +106,75 @@ export function CheckoutPage() {
   return (
     <Container className="mt-5">
       <Row>
-        {/* ================= FORM ================= */}
+        {/* FORM */}
         <Col md={7}>
           <h3 className="mb-4">Billing Details</h3>
 
-          {error && <div className="text-danger mb-3">{error}</div>}
+          {error && (
+            <div className="text-danger mb-3 d-flex justify-content-between align-items-center">
+              <span>{error}</span>
+              <Button size="sm" onClick={() => setError("")}>
+                Retry
+              </Button>
+            </div>
+          )}
 
           <Form onSubmit={handleSubmit}>
-            {/* First Name */}
-            <Form.Group className="mb-3">
-              <Form.Control
-                placeholder="First Name *"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                isInvalid={!!errors.firstName}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.firstName}
-              </Form.Control.Feedback>
-            </Form.Group>
+            <Form.Control
+              className="mb-3"
+              placeholder="First Name *"
+              name="firstName"
+              onChange={handleChange}
+              isInvalid={!!errors.firstName}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.firstName}
+            </Form.Control.Feedback>
 
-            {/* Last Name */}
-            <Form.Group className="mb-3">
-              <Form.Control
-                placeholder="Last Name *"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                isInvalid={!!errors.lastName}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.lastName}
-              </Form.Control.Feedback>
-            </Form.Group>
+            <Form.Control
+              className="mb-3"
+              placeholder="Last Name *"
+              name="lastName"
+              onChange={handleChange}
+              isInvalid={!!errors.lastName}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.lastName}
+            </Form.Control.Feedback>
 
-            {/* Email */}
-            <Form.Group className="mb-3">
-              <Form.Control
-                type="email"
-                placeholder="Email *"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                isInvalid={!!errors.email}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.email}
-              </Form.Control.Feedback>
-            </Form.Group>
+            <Form.Control
+              className="mb-3"
+              placeholder="Email *"
+              name="email"
+              onChange={handleChange}
+              isInvalid={!!errors.email}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.email}
+            </Form.Control.Feedback>
 
-            {/* Phone */}
-            <Form.Group className="mb-3">
-              <Form.Control
-                placeholder="Phone *"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                isInvalid={!!errors.phone}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.phone}
-              </Form.Control.Feedback>
-            </Form.Group>
+            <Form.Control
+              className="mb-3"
+              placeholder="Phone *"
+              name="phone"
+              onChange={handleChange}
+              isInvalid={!!errors.phone}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.phone}
+            </Form.Control.Feedback>
 
-            {/* Address */}
-            <Form.Group className="mb-3">
-              <Form.Control
-                placeholder="Address *"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                isInvalid={!!errors.address}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.address}
-              </Form.Control.Feedback>
-            </Form.Group>
+            <Form.Control
+              className="mb-3"
+              placeholder="Address *"
+              name="address"
+              onChange={handleChange}
+              isInvalid={!!errors.address}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.address}
+            </Form.Control.Feedback>
 
-            {/* Submit */}
             <Button
               type="submit"
               variant="danger"
@@ -205,7 +192,7 @@ export function CheckoutPage() {
           </Form>
         </Col>
 
-        {/* ================= SUMMARY ================= */}
+        {/* SUMMARY */}
         <Col md={5}>
           <Card>
             <Card.Body>
@@ -221,7 +208,6 @@ export function CheckoutPage() {
                   <span>
                     {item.name} x{item.quantity}
                   </span>
-
                   <span>${item.price * item.quantity}</span>
                 </div>
               ))}
