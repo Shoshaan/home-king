@@ -64,7 +64,7 @@ export const CustomNavbar = () => {
       expand="lg"
       fixed="top"
       expanded={expanded}
-      className="custom-navbar shadow-sm"
+      className="shadow-sm"
     >
       <Container>
         <Navbar.Brand as={NavLink} to="/" className="d-flex align-items-center">
