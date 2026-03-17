@@ -64,7 +64,7 @@ export const CustomNavbar = () => {
       expand="lg"
       fixed="top"
       expanded={expanded}
-      className="shadow-sm"
+      className="custom-navbar shadow-sm"
     >
       <Container>
         <Navbar.Brand as={NavLink} to="/" className="d-flex align-items-center">
@@ -114,9 +114,13 @@ export const CustomNavbar = () => {
             >
               Contact Us
             </Nav.Link>
-            <Nav.Link as={Link} to="/cart" className="cart-link">
-              {" "}
+            <Nav.Link
+              as={Link}
+              to="/cart"
+              className="cart-link"
               onClick={() => setExpanded(false)}
+            >
+              {" "}
               <span className="cart-icon-wrapper">
                 <FaShoppingCart size={22} />
                 {cartCount > 0 && (
