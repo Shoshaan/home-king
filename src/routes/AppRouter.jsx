@@ -10,8 +10,8 @@ import { PaymentFailed } from "../pages/PaymentFaild";
 import { ScrollToTop } from "../features/products/components/ScrollToTop";
 import { DashboardPage } from "../features/dashboard/Pages/DashboardPage";
 import { OrdersPage } from "../features/dashboard/Pages/OrdersPage";
-
-
+import { LoginPage } from "../pages/LoginPage";
+import { ProtectedRoute } from "../features/components/ProtectedRoute";
 
 export function AppRouter() {
   return (
@@ -25,7 +25,15 @@ export function AppRouter() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/success" element={<PaymentSuccess />} />
           <Route path="/failed" element={<PaymentFailed />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/dashboard/orders" element={<OrdersPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />

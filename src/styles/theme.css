@@ -262,3 +262,19 @@ html {
 .sidebar-link.active {
   background: #dc3545;
 }
+.logout-btn {
+  background: transparent;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  padding: 6px 14px;
+  margin-left: 20px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+/* hover */
+.logout-btn:hover {
+  background: #dc3545;
+  color: white;
+}

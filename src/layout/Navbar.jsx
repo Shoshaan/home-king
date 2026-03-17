@@ -4,6 +4,7 @@ import { Logo } from "../features/products/components/Logo";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
+import { useAuth } from "../context/AuthContext";
 
 export const CustomNavbar = () => {
   const [activeSection, setActiveSection] = useState("hero-section");
@@ -12,6 +13,7 @@ export const CustomNavbar = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const [expanded, setExpanded] = useState(false);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     if (location.pathname !== "/") {
@@ -139,6 +141,12 @@ export const CustomNavbar = () => {
                 )}
               </span>
             </Nav.Link>
+
+            {user && (
+              <button className="logout-btn" onClick={logout}>
+                Logout
+              </button>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
